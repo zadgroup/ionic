@@ -765,15 +765,15 @@ function add(...args) {
 }
 
 /**
- * Swiper 4.4.6
+ * Swiper 4.5.0
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  * http://www.idangero.us/swiper/
  *
- * Copyright 2014-2018 Vladimir Kharlampidi
+ * Copyright 2014-2019 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 19, 2018
+ * Released on: February 22, 2019
  */
 
 const Methods = {
@@ -785,11 +785,11 @@ const Methods = {
   removeAttr,
   data,
   transform,
-  transition,
+  transition: transition,
   on,
   off,
   trigger,
-  transitionEnd,
+  transitionEnd: transitionEnd,
   outerWidth,
   outerHeight,
   offset,
@@ -935,7 +935,7 @@ const Support = (function Support() {
       return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
     }()),
 
-    pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
+    pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator && win.navigator.maxTouchPoints > 0)),
     prefixedPointerEvents: !!win.navigator.msPointerEnabled,
 
     transition: (function checkTransition() {
@@ -982,6 +982,19 @@ const Support = (function Support() {
   };
 }());
 
+const Browser = (function Browser() {
+  function isSafari() {
+    const ua = win.navigator.userAgent.toLowerCase();
+    return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
+  }
+  return {
+    isIE: !!win.navigator.userAgent.match(/Trident/g) || !!win.navigator.userAgent.match(/MSIE/g),
+    isEdge: !!win.navigator.userAgent.match(/Edge/g),
+    isSafari: isSafari(),
+    isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(win.navigator.userAgent),
+  };
+}());
+
 class SwiperClass {
   constructor(params = {}) {
     const self = this;
@@ -1014,7 +1027,11 @@ class SwiperClass {
     function onceHandler(...args) {
       handler.apply(self, args);
       self.off(events, onceHandler);
+      if (onceHandler.f7proxy) {
+        delete onceHandler.f7proxy;
+      }
     }
+    onceHandler.f7proxy = handler;
     return self.on(events, onceHandler, priority);
   }
 
@@ -1026,7 +1043,7 @@ class SwiperClass {
         self.eventsListeners[event] = [];
       } else if (self.eventsListeners[event] && self.eventsListeners[event].length) {
         self.eventsListeners[event].forEach((eventHandler, index$$1) => {
-          if (eventHandler === handler) {
+          if (eventHandler === handler || (eventHandler.f7proxy && eventHandler.f7proxy === handler)) {
             self.eventsListeners[event].splice(index$$1, 1);
           }
         });
@@ -3199,7 +3216,12 @@ function setBreakpoint () {
     }
 
     const breakpointParams = breakpointOnlyParams || swiper.originalParams;
-    const needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView);
+    const directionChanged = breakpointParams.direction && breakpointParams.direction !== params.direction;
+    const needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
+
+    if (directionChanged && initialized) {
+      swiper.changeDirection();
+    }
 
     Utils.extend(swiper.params, breakpointParams);
 
@@ -3217,6 +3239,7 @@ function setBreakpoint () {
       swiper.updateSlides();
       swiper.slideTo((activeIndex - loopedSlides) + swiper.loopedSlides, 0, false);
     }
+
     swiper.emit('breakpoint', breakpointParams);
   }
 }
@@ -3246,19 +3269,6 @@ function getBreakpoint (breakpoints) {
 
 var breakpoints = { setBreakpoint, getBreakpoint };
 
-const Browser = (function Browser() {
-  function isSafari() {
-    const ua = win.navigator.userAgent.toLowerCase();
-    return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
-  }
-  return {
-    isIE: !!win.navigator.userAgent.match(/Trident/g) || !!win.navigator.userAgent.match(/MSIE/g),
-    isEdge: !!win.navigator.userAgent.match(/Edge/g),
-    isSafari: isSafari(),
-    isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(win.navigator.userAgent),
-  };
-}());
-
 function addClasses () {
   const swiper = this;
   const {
@@ -3266,6 +3276,7 @@ function addClasses () {
   } = swiper;
   const suffixes = [];
 
+  suffixes.push('initialized');
   suffixes.push(params.direction);
 
   if (params.freeMode) {
@@ -3516,6 +3527,8 @@ var defaults = {
   // Callbacks
   runCallbacksOnInit: true,
 };
+
+/* eslint no-param-reassign: "off" */
 
 const prototypes = {
   update,
@@ -3812,6 +3825,52 @@ class Swiper extends SwiperClass {
       swiper.checkOverflow();
     }
     swiper.emit('update');
+  }
+
+  changeDirection(newDirection, needUpdate = true) {
+    const swiper = this;
+    const currentDirection = swiper.params.direction;
+    if (!newDirection) {
+      // eslint-disable-next-line
+      newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
+    }
+    if ((newDirection === currentDirection) || (newDirection !== 'horizontal' && newDirection !== 'vertical')) {
+      return swiper;
+    }
+
+    if (currentDirection === 'vertical') {
+      swiper.$el
+        .removeClass(`${swiper.params.containerModifierClass}vertical wp8-vertical`)
+        .addClass(`${swiper.params.containerModifierClass}${newDirection}`);
+
+      if ((Browser.isIE || Browser.isEdge) && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+        swiper.$el.addClass(`${swiper.params.containerModifierClass}wp8-${newDirection}`);
+      }
+    }
+    if (currentDirection === 'horizontal') {
+      swiper.$el
+        .removeClass(`${swiper.params.containerModifierClass}horizontal wp8-horizontal`)
+        .addClass(`${swiper.params.containerModifierClass}${newDirection}`);
+
+      if ((Browser.isIE || Browser.isEdge) && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+        swiper.$el.addClass(`${swiper.params.containerModifierClass}wp8-${newDirection}`);
+      }
+    }
+
+    swiper.params.direction = newDirection;
+
+    swiper.slides.each((slideIndex, slideEl) => {
+      if (newDirection === 'vertical') {
+        slideEl.style.width = '';
+      } else {
+        slideEl.style.height = '';
+      }
+    });
+
+    swiper.emit('changeDirection');
+    if (needUpdate) swiper.update();
+
+    return swiper;
   }
 
   init() {
@@ -4639,6 +4698,12 @@ var pagination = {
         && swiper.pagination.$el.length > 0
         && !$(e.target).hasClass(swiper.params.pagination.bulletClass)
       ) {
+        const isHidden = swiper.pagination.$el.hasClass(swiper.params.pagination.hiddenClass);
+        if (isHidden === true) {
+          swiper.emit('paginationShow', swiper);
+        } else {
+          swiper.emit('paginationHide', swiper);
+        }
         swiper.pagination.$el.toggleClass(swiper.params.pagination.hiddenClass);
       }
     },
@@ -4731,7 +4796,7 @@ const Scrollbar = {
     } else {
       $el[0].style.display = '';
     }
-    if (swiper.params.scrollbarHide) {
+    if (swiper.params.scrollbar.hide) {
       $el[0].style.opacity = 0;
     }
     Utils.extend(scrollbar, {

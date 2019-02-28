@@ -55,7 +55,7 @@
     "rollup-plugin-node-resolve": "4.0.0",
     "stylelint": "9.10.1",
     "stylelint-order": "2.0.0",
-    "swiper": "4.4.6",
+    "swiper": "4.5.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^3.6.0"
