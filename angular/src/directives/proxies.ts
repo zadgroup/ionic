@@ -601,7 +601,7 @@ export class IonRange {
 proxyInputs(IonRange, ['color', 'mode', 'debounce', 'name', 'dualKnobs', 'min', 'max', 'pin', 'snaps', 'step', 'disabled', 'value']);
 
 export declare interface IonRefresher extends StencilComponents<'IonRefresher'> {}
-@Component({ selector: 'ion-refresher', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled'] })
+@Component({ selector: 'ion-refresher', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'pullDownFactor', 'disabled'] })
 export class IonRefresher {
   ionRefresh!: EventEmitter<CustomEvent>;
   ionPull!: EventEmitter<CustomEvent>;
@@ -614,7 +614,7 @@ export class IonRefresher {
   }
 }
 proxyMethods(IonRefresher, ['complete', 'cancel', 'getProgress']);
-proxyInputs(IonRefresher, ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'disabled']);
+proxyInputs(IonRefresher, ['pullMin', 'pullMax', 'closeDuration', 'snapbackDuration', 'pullDownFactor', 'disabled']);
 
 export declare interface IonRefresherContent extends StencilComponents<'IonRefresherContent'> {}
 @Component({ selector: 'ion-refresher-content', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'] })
