@@ -86,6 +86,54 @@ async function presentToastWithOptions() {
 ```
 
 
+### React
+
+```tsx
+import React, { Component } from 'react'
+import { IonToast } from '@ionic/react';
+
+type Props = {}
+type State = {
+  showToast1: boolean
+  showToast2: boolean
+}
+
+export class Toast extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showToast1: false
+      showToast2: false
+    };
+  }
+
+  render() {
+    return (
+      <IonToast
+        isOpen={this.state.showToast1}
+        onDidDismiss={() => this.setState(() => ({ showToast1: false }))}
+        message='Your settings have been saved.'
+        duration={200}
+      >
+      </IonToast>
+
+      <IonToast
+        isOpen={this.state.showToast2}
+        onDidDismiss={() => this.setState(() => ({ showToast2: false }))}
+        message='Click to Close'
+        showCloseButton={true}
+        position='top'
+        closeButtonText='Done'
+      >
+      </IonToast>
+    );
+  }
+}
+
+```
+
+
 
 ## Properties
 
@@ -108,14 +156,12 @@ async function presentToastWithOptions() {
 
 ## Events
 
-| Event                 | Description                             | Detail             |
-| --------------------- | --------------------------------------- | ------------------ |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | OverlayEventDetail |
-| `ionToastDidLoad`     | Emitted after the toast has loaded.     | void               |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | void               |
-| `ionToastDidUnload`   | Emitted after the toast has unloaded.   | void               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | OverlayEventDetail |
-| `ionToastWillPresent` | Emitted before the toast has presented. | void               |
+| Event                 | Description                             | Type                              |
+| --------------------- | --------------------------------------- | --------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
 
 
 ## Methods
@@ -170,16 +216,22 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name              | Description                |
-| ----------------- | -------------------------- |
-| `--background`    | Background of the toast    |
-| `--border-color`  | Border color of the toast  |
-| `--border-radius` | Border radius of the toast |
-| `--border-style`  | Border style of the toast  |
-| `--border-width`  | Border width of the toast  |
-| `--box-shadow`    | Box shadow of the toast    |
-| `--button-color`  | Color of the button text   |
-| `--color`         | Color of the toast text    |
+| Name              | Description                 |
+| ----------------- | --------------------------- |
+| `--background`    | Background of the toast     |
+| `--border-color`  | Border color of the toast   |
+| `--border-radius` | Border radius of the toast  |
+| `--border-style`  | Border style of the toast   |
+| `--border-width`  | Border width of the toast   |
+| `--box-shadow`    | Box shadow of the toast     |
+| `--button-color`  | Color of the button text    |
+| `--color`         | Color of the toast text     |
+| `--height`        | Height of the toast         |
+| `--max-height`    | Maximum height of the toast |
+| `--max-width`     | Maximum width of the toast  |
+| `--min-height`    | Minimum height of the toast |
+| `--min-width`     | Minimum width of the toast  |
+| `--width`         | Width of the toast          |
 
 
 ----------------------------------------------
