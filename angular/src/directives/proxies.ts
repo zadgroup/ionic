@@ -693,6 +693,25 @@ export class IonSearchbar {
 proxyMethods(IonSearchbar, ['setFocus', 'getInputElement']);
 proxyInputs(IonSearchbar, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
 
+export declare interface IonSearchbarGql extends StencilComponents<'IonSearchbarGql'> {}
+@Component({ selector: 'ion-searchbar-gql', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'] })
+export class IonSearchbarGql {
+  ionInput!: EventEmitter<CustomEvent>;
+  ionChange!: EventEmitter<CustomEvent>;
+  ionCancel!: EventEmitter<CustomEvent>;
+  ionClear!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
+  ionFocus!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
+  }
+}
+proxyMethods(IonSearchbarGql, ['setFocus', 'getInputElement']);
+proxyInputs(IonSearchbarGql, ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
+
 export declare interface IonSegment extends StencilComponents<'IonSegment'> {}
 @Component({ selector: 'ion-segment', changeDetection: 0, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'disabled', 'scrollable', 'value'] })
 export class IonSegment {

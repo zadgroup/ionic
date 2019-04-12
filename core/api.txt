@@ -876,6 +876,40 @@ ion-router,event,ionRouteWillChange,RouterEventDetail,true
 
 ion-row,shadow
 
+ion-searchbar-gql,scoped
+ion-searchbar-gql,prop,animated,boolean,false,false,false
+ion-searchbar-gql,prop,autocomplete,"off" | "on",'off',false,false
+ion-searchbar-gql,prop,autocorrect,"off" | "on",'off',false,false
+ion-searchbar-gql,prop,cancelButtonIcon,string,'md-arrow-back',false,false
+ion-searchbar-gql,prop,cancelButtonText,string,'Cancel',false,false
+ion-searchbar-gql,prop,clearIcon,string | undefined,undefined,false,false
+ion-searchbar-gql,prop,color,string | undefined,undefined,false,false
+ion-searchbar-gql,prop,debounce,number,250,false,false
+ion-searchbar-gql,prop,mode,"ios" | "md",undefined,false,false
+ion-searchbar-gql,prop,placeholder,string,'Search',false,false
+ion-searchbar-gql,prop,searchIcon,string,'search',false,false
+ion-searchbar-gql,prop,showCancelButton,boolean,false,false,false
+ion-searchbar-gql,prop,spellcheck,boolean,false,false,false
+ion-searchbar-gql,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
+ion-searchbar-gql,prop,value,null | string | undefined,'',false,false
+ion-searchbar-gql,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
+ion-searchbar-gql,method,setFocus,setFocus() => void
+ion-searchbar-gql,event,ionBlur,void,true
+ion-searchbar-gql,event,ionCancel,void,true
+ion-searchbar-gql,event,ionChange,SearchbarGqlChangeEventDetail,true
+ion-searchbar-gql,event,ionClear,void,true
+ion-searchbar-gql,event,ionFocus,void,true
+ion-searchbar-gql,event,ionInput,KeyboardEvent,true
+ion-searchbar-gql,css-prop,--background
+ion-searchbar-gql,css-prop,--cancel-button-color
+ion-searchbar-gql,css-prop,--clear-button-color
+ion-searchbar-gql,css-prop,--color
+ion-searchbar-gql,css-prop,--icon-color
+ion-searchbar-gql,css-prop,--placeholder-color
+ion-searchbar-gql,css-prop,--placeholder-font-style
+ion-searchbar-gql,css-prop,--placeholder-font-weight
+ion-searchbar-gql,css-prop,--placeholder-opacity
+
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocomplete,"off" | "on",'off',false,false

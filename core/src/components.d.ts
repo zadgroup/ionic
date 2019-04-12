@@ -54,6 +54,7 @@ import {
   ScrollBaseDetail,
   ScrollDetail,
   SearchbarChangeEventDetail,
+  SearchbarGqlChangeEventDetail,
   SegmentButtonLayout,
   SegmentChangeEventDetail,
   SelectChangeEventDetail,
@@ -3686,6 +3687,163 @@ export namespace Components {
   interface IonRow {}
   interface IonRowAttributes extends StencilHTMLAttributes {}
 
+  interface IonSearchbarGql {
+    /**
+    * If `true`, enable searchbar animation.
+    */
+    'animated': boolean;
+    /**
+    * Set the input's autocomplete property.
+    */
+    'autocomplete': 'on' | 'off';
+    /**
+    * Set the input's autocorrect property.
+    */
+    'autocorrect': 'on' | 'off';
+    /**
+    * Set the cancel button icon. Only applies to `md` mode.
+    */
+    'cancelButtonIcon': string;
+    /**
+    * Set the the cancel button text. Only applies to `ios` mode.
+    */
+    'cancelButtonText': string;
+    /**
+    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+    */
+    'clearIcon'?: string;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+    */
+    'debounce': number;
+    /**
+    * Returns the native `<input>` element used under the hood.
+    */
+    'getInputElement': () => Promise<HTMLInputElement>;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode': Mode;
+    /**
+    * Set the input's placeholder.
+    */
+    'placeholder': string;
+    /**
+    * The icon to use as the search icon.
+    */
+    'searchIcon': string;
+    /**
+    * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
+    */
+    'setFocus': () => void;
+    /**
+    * If `true`, show the cancel button.
+    */
+    'showCancelButton': boolean;
+    /**
+    * If `true`, enable spellcheck on the input.
+    */
+    'spellcheck': boolean;
+    /**
+    * Set the type of the input.
+    */
+    'type': 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
+    /**
+    * the value of the searchbar.
+    */
+    'value'?: string | null;
+  }
+  interface IonSearchbarGqlAttributes extends StencilHTMLAttributes {
+    /**
+    * If `true`, enable searchbar animation.
+    */
+    'animated'?: boolean;
+    /**
+    * Set the input's autocomplete property.
+    */
+    'autocomplete'?: 'on' | 'off';
+    /**
+    * Set the input's autocorrect property.
+    */
+    'autocorrect'?: 'on' | 'off';
+    /**
+    * Set the cancel button icon. Only applies to `md` mode.
+    */
+    'cancelButtonIcon'?: string;
+    /**
+    * Set the the cancel button text. Only applies to `ios` mode.
+    */
+    'cancelButtonText'?: string;
+    /**
+    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+    */
+    'clearIcon'?: string;
+    /**
+    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+    */
+    'color'?: Color;
+    /**
+    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+    */
+    'debounce'?: number;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: Mode;
+    /**
+    * Emitted when the input loses focus.
+    */
+    'onIonBlur'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the cancel button is clicked.
+    */
+    'onIonCancel'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the value has changed.
+    */
+    'onIonChange'?: (event: CustomEvent<SearchbarGqlChangeEventDetail>) => void;
+    /**
+    * Emitted when the clear input button is clicked.
+    */
+    'onIonClear'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the input has focus.
+    */
+    'onIonFocus'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when a keyboard input ocurred.
+    */
+    'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
+    /**
+    * Set the input's placeholder.
+    */
+    'placeholder'?: string;
+    /**
+    * The icon to use as the search icon.
+    */
+    'searchIcon'?: string;
+    /**
+    * If `true`, show the cancel button.
+    */
+    'showCancelButton'?: boolean;
+    /**
+    * If `true`, enable spellcheck on the input.
+    */
+    'spellcheck'?: boolean;
+    /**
+    * Set the type of the input.
+    */
+    'type'?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
+    /**
+    * the value of the searchbar.
+    */
+    'value'?: string | null;
+  }
+
   interface IonSearchbar {
     /**
     * If `true`, enable searchbar animation.
@@ -5178,6 +5336,7 @@ declare global {
     'IonRouterOutlet': Components.IonRouterOutlet;
     'IonRouter': Components.IonRouter;
     'IonRow': Components.IonRow;
+    'IonSearchbarGql': Components.IonSearchbarGql;
     'IonSearchbar': Components.IonSearchbar;
     'IonSegmentButton': Components.IonSegmentButton;
     'IonSegment': Components.IonSegment;
@@ -5278,6 +5437,7 @@ declare global {
     'ion-router-outlet': Components.IonRouterOutletAttributes;
     'ion-router': Components.IonRouterAttributes;
     'ion-row': Components.IonRowAttributes;
+    'ion-searchbar-gql': Components.IonSearchbarGqlAttributes;
     'ion-searchbar': Components.IonSearchbarAttributes;
     'ion-segment-button': Components.IonSegmentButtonAttributes;
     'ion-segment': Components.IonSegmentAttributes;
@@ -5743,6 +5903,12 @@ declare global {
     new (): HTMLIonRowElement;
   };
 
+  interface HTMLIonSearchbarGqlElement extends Components.IonSearchbarGql, HTMLStencilElement {}
+  var HTMLIonSearchbarGqlElement: {
+    prototype: HTMLIonSearchbarGqlElement;
+    new (): HTMLIonSearchbarGqlElement;
+  };
+
   interface HTMLIonSearchbarElement extends Components.IonSearchbar, HTMLStencilElement {}
   var HTMLIonSearchbarElement: {
     prototype: HTMLIonSearchbarElement;
@@ -5961,6 +6127,7 @@ declare global {
     'ion-router-outlet': HTMLIonRouterOutletElement
     'ion-router': HTMLIonRouterElement
     'ion-row': HTMLIonRowElement
+    'ion-searchbar-gql': HTMLIonSearchbarGqlElement
     'ion-searchbar': HTMLIonSearchbarElement
     'ion-segment-button': HTMLIonSegmentButtonElement
     'ion-segment': HTMLIonSegmentElement
@@ -6061,6 +6228,7 @@ declare global {
     'ion-router-outlet': HTMLIonRouterOutletElement;
     'ion-router': HTMLIonRouterElement;
     'ion-row': HTMLIonRowElement;
+    'ion-searchbar-gql': HTMLIonSearchbarGqlElement;
     'ion-searchbar': HTMLIonSearchbarElement;
     'ion-segment-button': HTMLIonSegmentButtonElement;
     'ion-segment': HTMLIonSegmentElement;

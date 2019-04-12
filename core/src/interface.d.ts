@@ -19,6 +19,7 @@ export * from './components/router/utils/interface';
 export * from './components/refresher/refresher-interface';
 export * from './components/reorder-group/reorder-group-interface';
 export * from './components/searchbar/searchbar-interface';
+export * from './components/searchbar-gql/searchbar-gql-interface';
 export * from './components/segment/segment-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';

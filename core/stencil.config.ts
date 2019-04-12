@@ -39,6 +39,7 @@ export const config: Config = {
     { components: ['ion-ripple-effect'] },
     { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-outlet'] },
     { components: ['ion-searchbar'] },
+    { components: ['ion-searchbar-gql'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
     { components: ['ion-slides', 'ion-slide'] },
